@@ -1,0 +1,153 @@
+﻿@model StarApp1.Models.AllowanceDashboardViewModel 
+
+@{
+    ViewData["Title"] = "Dashboard";
+    List<AllowanceDashboardViewModel> listEmployee = ViewBag.listEmployee;
+}
+
+<h1>Dashboard</h1>
+<form asp-action="Dashboard" Method="Post">
+    <table class="table justify-content-center">
+    <tr>
+        <td>
+        <div class="form-group">
+               <label asp-for="Period" class="control-label"></label>
+               @Html.DropDownListFor(x=>x.PeriodStart,Model.Period ,"--select--")
+               <br/>
+        </div>
+        </td>
+        <td>
+            <div class="form-group">
+                <label asp-for="Project" class="control-label"></label>
+               @Html.DropDownListFor(x=>x.ProjectId,Model.Project,"--select--")
+               <br/>
+            </div>
+        </td>
+     </tr>
+    </table>
+            <br/>
+            <div class="form-group justify-content-center">
+                <input type="submit" value="Apply Filter" class="btn btn-primary" />
+            </div>
+
+</form>
+            <div class="form-group justify-content-center">
+                <br/>
+                
+                 @using (Html.BeginForm("ImportToDb", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label asp-for="browseFile" class="control-label"></label>
+                    <input type="file" name="file" class="form-control" />
+                    <input type="submit" value=" Import " class="btn btn-primary"/>
+                }
+                @*<asp:Button id="Button1" runat="server" BackColor="#33CCFF" OnClick="ImportToDb" Text="Upload and Save" />*@
+                @*<button type="button" value=" Import " class="btn btn-primary" onClick = "location.href='@Url.Action("ImportToDb", "User")"/>Import</button>*@
+            </div>
+
+<br/>
+            
+            
+
+<table class="table table-striped justify-content-center"  >
+<thread>
+<tr>
+<th >
+@Html.DisplayNameFor(model => model.Name)
+</th>
+<th >
+@Html.DisplayNameFor(model => model.SAPid)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.Hours)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.LeaveHours)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.AfternoonShiftDays)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.NightShiftDays)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.TotalDays)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.TransportAllowance)
+</th>
+
+<th >
+@Html.DisplayNameFor(model => model.TotalAllowance)
+</th>
+<th >
+@Html.DisplayNameFor(model => model.ApprovalStatus)
+</th>
+
+</tr>
+</tr>
+    </thread>
+    <tbody>
+        
+           @foreach (var item in listEmployee)
+            {
+                <thread>
+                @using(Html.BeginForm())
+                {
+                    <tr class = " justify-content-center">
+	                        <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.Name)
+	                        </td>
+	                        <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.SAPid)
+	                        </td>
+	                        <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.Hours)
+	                        </td>
+	                        <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.LeaveHours)
+	                        </td>
+	                        <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.AfternoonShiftDays)
+	                        </td>
+                            <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.NightShiftDays)
+	                        </td>
+                            <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.TotalDays)
+	                        </td>
+                            <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.TransportAllowance)
+	                        </td>
+                            <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.TotalAllowance)
+	                        </td>
+                            <td scope ="col">
+	                            @Html.DisplayFor(modelItem=>item.ApprovalStatus)
+	                        </td>
+	                        
+	                </tr>
+                    
+                }
+                </thread>
+            
+            }
+           
+
+</tbody>
+
+</table>
+
+
+    
+            <div class="form-group text-center justify-content-center">
+                <button type="button" name="SubmitButton" value="Download" class="btn btn-sm btn-success" onclick ="location.href='@Url.Action("ExportToCSV", "User")'">Approve And Export</button>
+            </div>
+
+
+   

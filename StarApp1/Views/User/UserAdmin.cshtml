@@ -1,0 +1,100 @@
+﻿@using Org.BouncyCastle.Asn1.Ocsp
+@model IEnumerable<StarApp1.Models.UserAdmin>
+
+@{
+    ViewData["Title"] = "UserAdmin";
+    
+     
+}
+
+<h3>UserAdmin</h3>
+@*Welcome @HttpContext.Current.User.Identity.Name
+ 
+@if (Request.IsAuthenticated)
+{}
+    using (Html.BeginForm("Logout","User", FormMethod.Post, new { id="logoutForm"}))
+    {
+        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+    }
+*@}
+<table class = "table justify-content-center">
+    <thread>
+        <tr>
+        @*<th >
+        @Html.DisplayNameFor(model => model.UserName)
+        </th>*@
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.ActiveFrom)
+        </th>
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th scope="auto">
+            @Html.DisplayNameFor(model => model.Confirmation)
+        </th>
+        
+    </tr>
+    </thread>
+    <tbody>
+        @if (Model.Count()>0)
+                {
+            @foreach (var item in Model)
+            {
+                <thread>
+                    @using (Html.BeginForm())
+                    {
+                        <tr>
+                            <td scope ="col">
+                                @Html.DisplayFor(modelItem=>item.UserName)
+                            </td>
+                            <td scope ="col">
+                                @Html.DisplayFor(modelItem=>item.Name)
+                            </td>
+                            <td scope ="col">
+                                @Html.DisplayFor(modelItem=>item.ActiveFrom)
+                            </td>
+                            <td scope ="col">
+                                @Html.DisplayFor(modelItem=>item.Role)
+                            </td>
+                            <td scope ="col">
+                                @Html.DisplayFor(modelItem=>item.Status)
+                            </td>
+                            <td scope ="col">
+                                @if(@item.Role!="Admin")
+                                {
+                                    @if (@item.Status== "Requested")
+                                    {
+                                        
+                                        <button type="button" name="SubmitButton" value="Approve" class="btn btn-sm btn-success" onclick ="location.href='@Url.Action("getApprove", "User",new{UserName=@item.UserName})">Approve</button>
+                                        <button type="button" name="SubmitButton" value="Decline" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("getdata", "User",new{UserName=@item.UserName})'" >Decline</button>
+                                    }
+                                @if (@item.Status== "Active")
+                                    {
+                                        <button type="button" name="SubmitButton" value="Decline" class="btn btn-sm btn-danger" onclick="location.href='@Url.Action("getdata", "User",new{UserName=@item.UserName})'" >Decline</button>
+                                    }
+                                @if (@item.Status== "Inactive")
+                                    {
+                                        <button type="button" name="SubmitButton" value="Approve" class="btn btn-sm btn-success" onclick="location.href='@Url.Action("getApprove", "User",new{UserName=@item.UserName})'" >Approve Again</button>
+                                    }
+                                }
+                               
+                            </td>
+                        </tr>
+                    }
+                </thread>
+            }
+
+        }
+
+</tbody>
+</table>
