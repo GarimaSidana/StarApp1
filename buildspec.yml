@@ -3,7 +3,7 @@ version: 0.2
 env:
   variables:
     PROJECT: Starapp1
-    DOTNET_FRAMEWORK: 4.8
+    DOTNET_FRAMEWORK: 6.0
 phases:
   build:
     commands:
